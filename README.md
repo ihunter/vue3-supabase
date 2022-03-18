@@ -1,6 +1,4 @@
-# vue-twitter-clone
-
-This template should help get you started developing with Vue 3 in Vite.
+# Twitter clone made with vue 3 and supabase
 
 ## Recommended IDE Setup
 
@@ -33,4 +31,3 @@ npm run build
 ```sh
 npm run lint
 ```
-# vue3-supabase
