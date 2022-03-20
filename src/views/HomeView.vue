@@ -54,6 +54,20 @@ onMounted(async () => {
   await getLikedTweets();
 });
 
+function likeTweet(id) {
+  console.log("liked", id);
+  const tweet = tweets.value.find((tweet) => tweet.id === id);
+  tweet.liked = true;
+  tweet.likes++;
+}
+
+function unlikeTweet(id) {
+  console.log("unliked", id);
+  const tweet = tweets.value.find((tweet) => tweet.id === id);
+  tweet.liked = false;
+  tweet.likes--;
+}
+
 async function logout() {
   try {
     await supabase.auth.signOut();
@@ -92,10 +106,15 @@ async function logout() {
           :content="tweet.content"
           :likes="tweet.likes"
           :liked="tweet.liked"
+          @liked="likeTweet"
+          @unliked="unlikeTweet"
         />
         <button @click="logout">Logout</button>
       </div>
-      <aside>What's happending</aside>
+      <aside>
+        <h1>{{ authStore.user.user_metadata.username }}</h1>
+        <p>{{ authStore.user.id }}</p>
+      </aside>
     </div>
   </main>
 </template>
@@ -144,6 +163,11 @@ async function logout() {
 
   aside {
     background: darkcyan;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

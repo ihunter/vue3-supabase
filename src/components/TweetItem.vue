@@ -13,14 +13,18 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["liked", "unliked"]);
+
 const authStore = useAuthStore();
 
 async function handleLike() {
   try {
     if (props.liked) {
       await unlikeTweet();
+      emit("unliked", props.id);
     } else {
       await likeTweet();
+      emit("liked", props.id);
     }
   } catch (error) {
     console.error(error.message);
