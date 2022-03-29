@@ -95,6 +95,9 @@ async function logout() {
         <a>
           <div>Profile</div>
         </a>
+        <a @click="logout">
+          <div>Logout</div>
+        </a>
       </nav>
       <div class="feed">
         <CreateTweet />
@@ -112,8 +115,7 @@ async function logout() {
         <button @click="logout">Logout</button>
       </div>
       <aside>
-        <h1>{{ authStore.user.user_metadata.username }}</h1>
-        <p>{{ authStore.user.id }}</p>
+        <h1>{{ authStore.username }}</h1>
       </aside>
     </div>
   </main>
