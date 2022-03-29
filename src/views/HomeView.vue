@@ -112,7 +112,6 @@ async function logout() {
           @liked="likeTweet"
           @unliked="unlikeTweet"
         />
-        <button @click="logout">Logout</button>
       </div>
       <aside>
         <h1>{{ authStore.username }}</h1>
@@ -136,7 +135,6 @@ async function logout() {
     flex-direction: column;
     justify-content: start;
     padding-right: 1rem;
-    background: coral;
   }
 
   nav a {
@@ -160,11 +158,12 @@ async function logout() {
   .feed {
     display: flex;
     flex-direction: column;
-    background: seagreen;
+    overflow-y: scroll;
+    height: 100vh;
   }
 
   aside {
-    background: darkcyan;
+    height: 100vh;
     padding: 1rem;
     display: flex;
     flex-direction: column;

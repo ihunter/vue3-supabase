@@ -76,7 +76,8 @@ async function unlikeTweet() {
   .tweet {
     padding: 1rem;
     border-bottom: 1px solid #ccc;
-    background: firebrick;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
 
     &:first-of-type {
       border-top: 0;
