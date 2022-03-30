@@ -51,7 +51,7 @@ const modifiedTweets = computed(() => {
 });
 
 onMounted(async () => {
-  Promise.allSettled(getTweets(), getLikedTweets());
+  Promise.allSettled([getTweets(), getLikedTweets()]);
 });
 
 function likeTweet(id) {
