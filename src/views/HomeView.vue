@@ -17,7 +17,8 @@ async function getTweets() {
   try {
     const { data, error } = await supabase
       .from("tweets")
-      .select("*, profiles( * )");
+      .select("*, profiles( * )")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
 
@@ -50,8 +51,7 @@ const modifiedTweets = computed(() => {
 });
 
 onMounted(async () => {
-  await getTweets();
-  await getLikedTweets();
+  Promise.allSettled(getTweets(), getLikedTweets());
 });
 
 function likeTweet(id) {
@@ -160,6 +160,22 @@ async function logout() {
     flex-direction: column;
     overflow-y: scroll;
     height: 100vh;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+
+      &-track {
+        background: var(vt-c-indigo);
+      }
+
+      &-thumb {
+        background: var(--primary);
+
+        &:hover {
+          background: var(--primary-hover);
+        }
+      }
+    }
   }
 
   aside {
