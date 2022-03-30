@@ -60,7 +60,7 @@ function resizeTextboxHeight(e) {
 
 <style lang="scss" scoped>
 .tweet-form-container {
-  border: 1px solid white;
+  border: 1px solid var(--border-color);
 
   .tweet-textarea-container {
     .tweet-textarea {

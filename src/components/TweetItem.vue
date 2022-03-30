@@ -63,37 +63,54 @@ async function unlikeTweet() {
     <div class="tweet-content">
       {{ content }}
     </div>
-    <div class="footer">
-      <button class="likes" :class="{ liked: liked }" @click="handleLike">
-        {{ likes }} Likes
+    <div class="tweet-footer">
+      <button class="like-button" :class="{ liked: liked }" @click="handleLike">
+        <font-awesome-icon icon="heart" size="lg" v-if="liked" />
+        <font-awesome-icon :icon="['far', 'heart']" size="lg" v-else />
+        <span class="like-count">{{ likes }}</span>
       </button>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@media (min-width: 1024px) {
-  .tweet {
-    padding: 1rem;
-    border-bottom: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+.tweet {
+  padding: 1rem;
+  padding-bottom: 5px;
+  border: 1px solid var(--border-color);
 
-    &:first-of-type {
-      border-top: 0;
-    }
+  &:first-of-type {
+    border-top: 0;
+  }
 
-    &:last-of-type {
-      border-bottom: 0;
-    }
+  &:last-of-type {
+    border-bottom: 0;
+  }
 
-    .likes {
-      padding: 3px;
+  .tweet-footer {
+    display: flex;
+    justify-content: flex-end;
+
+    .like-button {
+      cursor: pointer;
+      color: var(--color-text);
+      border: 0;
+      padding: 8px;
+      background-color: transparent;
+
+      &:hover {
+        color: var(--like-color-liked);
+        background-color: grey;
+        border-radius: 15px;
+      }
+
+      .like-count {
+        margin-left: 8px;
+      }
     }
 
     .liked {
-      color: white;
-      background: blue;
+      color: var(--like-color-liked);
     }
   }
 }

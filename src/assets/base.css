@@ -19,9 +19,6 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-
-  --primary: rgb(29, 155, 240);
-  --primary-hover: rgb(26, 140, 216);
 }
 
 /* semantic color variables for this project */
@@ -38,6 +35,14 @@
   --color-text-soft: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  --primary: rgb(29, 155, 240);
+  --primary-hover: rgb(26, 140, 216);
+
+  --border-color: rgb(47, 51, 54);
+
+  --like-color: var(--color-text);
+  --like-color-liked: rgb(249, 24, 28);
 }
 
 @media (prefers-color-scheme: dark) {

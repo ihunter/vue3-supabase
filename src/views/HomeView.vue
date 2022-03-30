@@ -121,70 +121,68 @@ async function logout() {
 </template>
 
 <style scoped lang="scss">
-@media (min-width: 1024px) {
-  .container {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    max-width: 1200px;
-    min-height: 100vh;
-    margin: auto;
-  }
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: auto;
+}
 
-  nav {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    padding-right: 1rem;
-  }
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-right: 1rem;
+}
 
-  nav a {
-    cursor: pointer;
-  }
+nav a {
+  cursor: pointer;
+}
 
-  nav a:hover div {
-    background: #333;
-  }
+nav a:hover div {
+  background: #333;
+}
 
-  nav a div {
-    display: inline-block;
-    padding: 1rem;
-    margin: 0.5rem;
-    padding: 1rem 1.5rem;
-    cursor: pointer;
-    border-radius: 30px;
-    transition: background-color 200ms linear;
-  }
+nav a div {
+  display: inline-block;
+  padding: 1rem;
+  margin: 0.5rem;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: background-color 200ms linear;
+}
 
-  .feed {
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    height: 100vh;
+.feed {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 100vh;
 
-    &::-webkit-scrollbar {
-      width: 10px;
+  &::-webkit-scrollbar {
+    width: 10px;
 
-      &-track {
-        background: var(vt-c-indigo);
-      }
+    &-track {
+      background: var(vt-c-indigo);
+    }
 
-      &-thumb {
-        background: var(--primary);
+    &-thumb {
+      background: var(--primary);
 
-        &:hover {
-          background: var(--primary-hover);
-        }
+      &:hover {
+        background: var(--primary-hover);
       }
     }
   }
+}
 
-  aside {
-    height: 100vh;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+aside {
+  height: 100vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
