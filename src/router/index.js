@@ -8,6 +8,7 @@ const router = createRouter({
       path: "/",
       name: "landing",
       component: () => import("../views/LandingView.vue"),
+      meta: { requiresAuth: true },
     },
     {
       path: "/home",

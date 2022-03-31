@@ -4,9 +4,18 @@ import { supabase } from "@/supabase";
 
 const props = defineProps({
   id: Number,
-  username: String,
-  content: String,
-  liked: Boolean,
+  username: {
+    type: String,
+    default: "TestUser",
+  },
+  content: {
+    type: String,
+    default: "Placeholder content",
+  },
+  liked: {
+    type: Boolean,
+    default: false,
+  },
   likes: {
     type: Number,
     default: 0,
@@ -77,15 +86,7 @@ async function unlikeTweet() {
 .tweet {
   padding: 1rem;
   padding-bottom: 5px;
-  border: 1px solid var(--border-color);
-
-  &:first-of-type {
-    border-top: 0;
-  }
-
-  &:last-of-type {
-    border-bottom: 0;
-  }
+  border-bottom: 1px solid var(--border-color);
 
   .tweet-footer {
     display: flex;

@@ -80,44 +80,45 @@ async function logout() {
 </script>
 
 <template>
-  <main>
-    <div class="container">
-      <nav>
-        <a>
-          <div>Home</div>
-        </a>
-        <a>
-          <div>Explore</div>
-        </a>
-        <a>
-          <div>Notifications</div>
-        </a>
-        <a>
-          <div>Profile</div>
-        </a>
-        <a @click="logout">
-          <div>Logout</div>
-        </a>
-      </nav>
-      <div class="feed">
-        <CreateTweet />
-        <TweetItem
-          v-for="tweet in modifiedTweets"
-          :key="tweet.id"
-          :id="tweet.id"
-          :username="tweet.profiles.username"
-          :content="tweet.content"
-          :likes="tweet.likes"
-          :liked="tweet.liked"
-          @liked="likeTweet"
-          @unliked="unlikeTweet"
-        />
-      </div>
-      <aside>
-        <h1>{{ authStore.username }}</h1>
-      </aside>
-    </div>
-  </main>
+  <div class="container">
+    <nav>
+      <a>
+        <div>Home</div>
+      </a>
+      <a>
+        <div>Explore</div>
+      </a>
+      <a>
+        <div>Notifications</div>
+      </a>
+      <a>
+        <div>Profile</div>
+      </a>
+      <a @click="logout">
+        <div>Logout</div>
+      </a>
+    </nav>
+
+    <main class="feed">
+      <CreateTweet />
+      <TweetItem
+        v-for="tweet in modifiedTweets"
+        :key="tweet.id"
+        :id="tweet.id"
+        :username="tweet.profiles.username"
+        :content="tweet.content"
+        :likes="tweet.likes"
+        :liked="tweet.liked"
+        @liked="likeTweet"
+        @unliked="unlikeTweet"
+      />
+      <TweetItem v-for="i in 20" :key="i" :id="i" />
+    </main>
+
+    <aside>
+      <h1>{{ authStore.username }}</h1>
+    </aside>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -125,64 +126,51 @@ async function logout() {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   max-width: 1200px;
-  min-height: 100vh;
   margin: auto;
-}
 
-nav {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  padding-right: 1rem;
-}
+  nav {
+    height: 100vh;
+    position: sticky;
+    top: 0;
 
-nav a {
-  cursor: pointer;
-}
-
-nav a:hover div {
-  background: #333;
-}
-
-nav a div {
-  display: inline-block;
-  padding: 1rem;
-  margin: 0.5rem;
-  padding: 1rem 1.5rem;
-  cursor: pointer;
-  border-radius: 30px;
-  transition: background-color 200ms linear;
-}
-
-.feed {
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  height: 100vh;
-
-  &::-webkit-scrollbar {
-    width: 10px;
-
-    &-track {
-      background: var(vt-c-indigo);
-    }
-
-    &-thumb {
-      background: var(--primary);
+    a {
+      display: block;
+      cursor: pointer;
 
       &:hover {
-        background: var(--primary-hover);
+        div {
+          background: #333;
+        }
+      }
+
+      div {
+        display: inline-block;
+        padding: 1rem;
+        margin: 0.5rem;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        border-radius: 30px;
+        transition: background-color 200ms linear;
       }
     }
   }
-}
 
-aside {
-  height: 100vh;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  main {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+  }
+
+  aside {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>
