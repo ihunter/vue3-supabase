@@ -1,9 +1,13 @@
 <script setup>
 import { useAuthStore } from "../stores/auth";
 import { supabase } from "@/supabase";
+import { computed } from "vue";
 
 const props = defineProps({
-  id: Number,
+  id: {
+    type: Number,
+    required: true,
+  },
   username: {
     type: String,
     default: "TestUser",
@@ -64,6 +68,10 @@ async function unlikeTweet() {
     console.error(error.message);
   }
 }
+
+const likeIcon = computed(() => {
+  return props.liked ? ["fas", "heart"] : ["far", "heart"];
+});
 </script>
 
 <template>
@@ -74,8 +82,7 @@ async function unlikeTweet() {
     </div>
     <div class="tweet-footer">
       <button class="like-button" :class="{ liked: liked }" @click="handleLike">
-        <font-awesome-icon icon="heart" size="lg" v-if="liked" />
-        <font-awesome-icon :icon="['far', 'heart']" size="lg" v-else />
+        <font-awesome-icon :icon="likeIcon" size="lg" />
         <span class="like-count">{{ likes }}</span>
       </button>
     </div>
