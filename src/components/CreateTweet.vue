@@ -3,6 +3,8 @@ import { ref } from "vue";
 import { useAuthStore } from "../stores/auth";
 import { supabase } from "@/supabase";
 
+const emit = defineEmits(["tweetCreated"]);
+
 const authStore = useAuthStore();
 const tweet = ref("");
 
@@ -17,13 +19,12 @@ async function submitTweet() {
 
     tweet.value = "";
 
-    console.log(data);
+    emit("tweetCreated", data[0].id);
 
     if (error) throw error;
   } catch (error) {
     console.error(error.message);
   }
-  console.log("Submit tweet");
 }
 
 function resizeTextboxHeight(e) {
@@ -93,7 +94,7 @@ function resizeTextboxHeight(e) {
       font-size: 1rem;
       font-weight: bold;
       border: 0;
-      border-radius: 20px;
+      border-radius: 9999px;
       background-color: var(--primary);
       transition: background-color 200ms;
 

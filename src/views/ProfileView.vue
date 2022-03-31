@@ -35,7 +35,6 @@ async function getProfile() {
 }
 
 onBeforeRouteUpdate(async (to, from) => {
-  console.log("before route change");
   if (to.params.profile !== from.params.profile) {
     getProfile();
   }

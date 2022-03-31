@@ -13,6 +13,22 @@ const authStore = useAuthStore();
 const tweets = ref([]);
 const likedTweets = ref([]);
 
+async function getTweetById(id) {
+  try {
+    const { data, error } = await supabase
+      .from("tweets")
+      .select("*, profiles( * )")
+      .eq("id", id)
+      .single();
+
+    if (error) throw error;
+
+    tweets.value.shift(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function getTweets() {
   try {
     const { data, error } = await supabase
@@ -55,14 +71,12 @@ onMounted(async () => {
 });
 
 function likeTweet(id) {
-  console.log("liked", id);
   const tweet = tweets.value.find((tweet) => tweet.id === id);
   tweet.liked = true;
   tweet.likes++;
 }
 
 function unlikeTweet(id) {
-  console.log("unliked", id);
   const tweet = tweets.value.find((tweet) => tweet.id === id);
   tweet.liked = false;
   tweet.likes--;
@@ -83,24 +97,47 @@ async function logout() {
   <div class="container">
     <nav>
       <a>
-        <div>Home</div>
+        <div>
+          <font-awesome-icon :icon="['fas', 'house']" size="lg" /><span
+            class="nav-link-text"
+            >Home</span
+          >
+        </div>
       </a>
       <a>
-        <div>Explore</div>
+        <div>
+          <font-awesome-icon :icon="['fas', 'hashtag']" size="lg" /><span
+            class="nav-link-text"
+            >Explore</span
+          >
+        </div>
       </a>
       <a>
-        <div>Notifications</div>
+        <div>
+          <font-awesome-icon :icon="['fas', 'bell']" size="lg" /><span
+            class="nav-link-text"
+            >Notifications</span
+          >
+        </div>
       </a>
       <a>
-        <div>Profile</div>
+        <div>
+          <font-awesome-icon :icon="['fas', 'user']" size="lg" /><span
+            class="nav-link-text"
+            >Profile</span
+          >
+        </div>
       </a>
       <a @click="logout">
-        <div>Logout</div>
+        <div>
+          <font-awesome-icon :icon="['fas', 'right-from-bracket']" size="lg" />
+          <span class="nav-link-text">Logout</span>
+        </div>
       </a>
     </nav>
 
     <main class="feed">
-      <CreateTweet />
+      <CreateTweet @tweet-created="getTweetById" />
       <TweetItem
         v-for="tweet in modifiedTweets"
         :key="tweet.id"
@@ -112,7 +149,7 @@ async function logout() {
         @liked="likeTweet"
         @unliked="unlikeTweet"
       />
-      <TweetItem v-for="i in 20" :key="i" :id="i" />
+      <!-- <TweetItem v-for="i in 20" :key="i" :id="i" /> -->
     </main>
 
     <aside>
@@ -132,6 +169,7 @@ async function logout() {
     height: 100vh;
     position: sticky;
     top: 0;
+    padding: 1rem;
 
     a {
       display: block;
@@ -144,13 +182,18 @@ async function logout() {
       }
 
       div {
+        font-size: 1.3rem;
         display: inline-block;
         padding: 1rem;
         margin: 0.5rem;
         padding: 1rem 1.5rem;
         cursor: pointer;
-        border-radius: 30px;
+        border-radius: 9999px;
         transition: background-color 200ms linear;
+
+        span {
+          margin-left: 1rem;
+        }
       }
     }
   }
@@ -166,7 +209,6 @@ async function logout() {
     height: 100vh;
     position: sticky;
     top: 0;
-
     padding: 1rem;
     display: flex;
     flex-direction: column;
