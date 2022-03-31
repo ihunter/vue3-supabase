@@ -23,7 +23,7 @@ async function getTweetById(id) {
 
     if (error) throw error;
 
-    tweets.value.shift(data);
+    tweets.value.unshift(data);
   } catch (error) {
     console.error(error);
   }
