@@ -18,7 +18,6 @@ watch(
   async (meta) => {
     try {
       layout.value = layouts[meta.layout];
-      console.log(layout.value);
     } catch (e) {
       layout.value = DefaultLayout;
     }

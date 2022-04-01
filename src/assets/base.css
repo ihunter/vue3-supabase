@@ -55,6 +55,11 @@
   font-weight: normal;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 body {
   color: var(--color-text);
   background: var(--color-background);

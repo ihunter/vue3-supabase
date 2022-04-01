@@ -102,7 +102,7 @@ async function handleSignUp() {
   padding: 2rem;
   background: black;
   width: 500px;
-  border-radius: 15px;
+  border-radius: 50px;
 
   h1,
   h2 {

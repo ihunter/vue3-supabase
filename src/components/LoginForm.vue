@@ -81,11 +81,39 @@ async function handleLogin() {
   padding: 2rem;
   background: black;
   width: 500px;
-  border-radius: 15px;
+  border-radius: 50px;
 
   h1,
   h2 {
     padding-left: 1.2rem;
+  }
+
+  .login-form {
+    .form-input {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem 0;
+
+      label {
+        padding-left: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      input {
+        font-size: 1.2rem;
+        height: 50px;
+        border-radius: 50px;
+        padding-left: 1.2rem;
+      }
+    }
+
+    .login-submit {
+      display: block;
+      width: 100%;
+      height: 50px;
+      border-radius: 50px;
+      margin-top: 3rem;
+    }
   }
   .sign-up-link {
     padding-top: 2rem;
@@ -99,34 +127,6 @@ async function handleLogin() {
         text-decoration: underline;
       }
     }
-  }
-}
-
-.login-form {
-  .form-input {
-    display: flex;
-    flex-direction: column;
-    margin: 1rem 0;
-
-    label {
-      padding-left: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    input {
-      font-size: 1.2rem;
-      height: 50px;
-      border-radius: 50px;
-      padding-left: 1.2rem;
-    }
-  }
-
-  .login-submit {
-    display: block;
-    width: 100%;
-    height: 50px;
-    border-radius: 50px;
-    margin-top: 3rem;
   }
 }
 </style>

@@ -3,30 +3,24 @@ import { onMounted, ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { supabase } from "@/supabase";
 
-const props = defineProps(["profile"]);
+const props = defineProps(["username"]);
 
 const loading = ref(false);
-const user = ref({});
-const username = ref("");
-const birthday = ref("");
+const profile = ref({});
 
 async function getProfile() {
   try {
     loading.value = true;
-    user.value = supabase.auth.user();
 
     const { data, error, status } = await supabase
       .from("profiles")
-      .select("username, birthday")
-      .eq("username", props.profile)
+      .select("*")
+      .eq("username", props.username)
       .single();
 
     if (error && status !== 406) throw error;
 
-    if (data) {
-      username.value = data.username;
-      birthday.value = data.birthday;
-    }
+    profile.value = data;
   } catch (error) {
     console.error(error.message);
   } finally {
@@ -47,12 +41,11 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div>USERNAME {{ username }}</div>
-    <div>BIRTHDAY {{ birthday }}</div>
-    <div>BIO</div>
-    <div>CREATED_AT</div>
-    <div>UPDATED_AT</div>
-    <button @click="getProfile">PRINT</button>
+    <div>USERNAME: {{ profile.username }}</div>
+    <div>BIRTHDAY: {{ profile.birthday }}</div>
+    <div>BIO: {{ profile.bio }}</div>
+    <div>CREATED_AT: {{ profile.created_at }}</div>
+    <div>UPDATED_AT: {{ profile.updated_at }}</div>
   </div>
 </template>
 
