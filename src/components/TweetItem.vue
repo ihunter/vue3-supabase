@@ -1,7 +1,10 @@
 <script setup>
-import { useAuthStore } from "../stores/auth";
-import { supabase } from "@/supabase";
 import { computed } from "vue";
+import { useAuthStore } from "../stores/auth";
+import { useTweetStore } from "../stores/tweets";
+import { supabase } from "@/supabase";
+
+const tweetStore = useTweetStore();
 
 const props = defineProps({
   id: {
@@ -26,18 +29,20 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["liked", "unliked"]);
-
 const authStore = useAuthStore();
 
 async function handleLike() {
   try {
     if (props.liked) {
       await unlikeTweet();
-      emit("unliked", props.id);
+      const index = tweetStore.userLikedTweets.indexOf(props.id);
+
+      if (index !== -1) {
+        tweetStore.userLikedTweets.splice(index, 1);
+      }
     } else {
       await likeTweet();
-      emit("liked", props.id);
+      tweetStore.userLikedTweets.push(props.id);
     }
   } catch (error) {
     console.error(error.message);
