@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+import { RouterLink } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 import { useTweetStore } from "../stores/tweets";
 import { supabase } from "@/supabase";
@@ -81,7 +82,11 @@ const likeIcon = computed(() => {
 
 <template>
   <div class="tweet">
-    <div class="username">{{ username }}</div>
+    <RouterLink :to="{ name: 'profile', params: { username } }">
+      <div class="username">
+        {{ username }}
+      </div>
+    </RouterLink>
     <div class="tweet-content">
       {{ content }}
     </div>
@@ -99,6 +104,10 @@ const likeIcon = computed(() => {
   padding: 1rem;
   padding-bottom: 5px;
   border-bottom: 1px solid var(--border-color);
+
+  .username {
+    font-weight: bold;
+  }
 
   .tweet-footer {
     display: flex;
