@@ -6,11 +6,23 @@ defineProps({
     type: Array,
     default: () => [],
   },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 });
 </script>
 
 <template>
+  <font-awesome-icon
+    v-if="loading"
+    :icon="['fas', 'spinner']"
+    pulse
+    size="3x"
+    style="margin: 1rem"
+  />
   <TweetItem
+    v-else
     v-for="tweet in tweets"
     :key="tweet.id"
     :id="tweet.id"
