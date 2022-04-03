@@ -24,7 +24,10 @@ const authStore = useAuthStore();
 <style scoped lang="scss">
 .container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: minmax(100px, 1fr) minmax(600px, 2fr) minmax(
+      300px,
+      1fr
+    );
   max-width: 1200px;
   margin: auto;
 
@@ -53,9 +56,26 @@ const authStore = useAuthStore();
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1100px) {
   .container {
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: minmax(100px, 1fr) minmax(600px, 2fr) minmax(
+        300px,
+        1fr
+      );
+
+    main {
+      margin-right: 1rem;
+    }
+
+    aside {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 100px auto;
 
     main {
       margin-right: 1rem;

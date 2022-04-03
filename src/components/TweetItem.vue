@@ -105,6 +105,10 @@ const likeIcon = computed(() => {
   padding-bottom: 5px;
   border-bottom: 1px solid var(--border-color);
 
+  a:hover {
+    text-decoration: underline;
+  }
+
   .username {
     font-weight: bold;
   }
@@ -122,8 +126,12 @@ const likeIcon = computed(() => {
 
       &:hover {
         color: var(--like-color-liked);
-        background-color: grey;
+        background-color: rgba(249, 24, 128, 0.1);
         border-radius: 15px;
+      }
+
+      &:active {
+        background-color: rgba(249, 24, 128, 0.2);
       }
 
       .like-count {
