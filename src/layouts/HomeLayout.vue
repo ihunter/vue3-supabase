@@ -58,15 +58,6 @@ const authStore = useAuthStore();
 
 @media (max-width: 1100px) {
   .container {
-    grid-template-columns: minmax(100px, 1fr) minmax(600px, 2fr) minmax(
-        300px,
-        1fr
-      );
-
-    main {
-      margin-right: 1rem;
-    }
-
     aside {
       display: none;
     }
@@ -76,14 +67,6 @@ const authStore = useAuthStore();
 @media (max-width: 900px) {
   .container {
     grid-template-columns: 100px auto;
-
-    main {
-      margin-right: 1rem;
-    }
-
-    aside {
-      display: none;
-    }
   }
 }
 </style>
