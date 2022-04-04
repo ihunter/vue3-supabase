@@ -101,10 +101,10 @@ const createdDate = computed(() => {
         <span class="username">
           {{ username }}
         </span>
-        <span class="created">
-          {{ createdDate }}
-        </span>
       </RouterLink>
+      <span class="created">
+        {{ createdDate }}
+      </span>
     </div>
     <div class="tweet-content">
       {{ content }}
@@ -156,7 +156,7 @@ const createdDate = computed(() => {
     }
 
     .created {
-      color: var(--vt-c-text-dark-2);
+      color: var(--color-text-soft);
       margin-left: 0.5rem;
     }
   }
