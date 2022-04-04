@@ -82,11 +82,16 @@ const likeIcon = computed(() => {
 
 <template>
   <div class="tweet">
-    <RouterLink :to="{ name: 'profile', params: { username } }">
-      <div class="username">
-        {{ username }}
-      </div>
-    </RouterLink>
+    <div class="tweet-profile">
+      <div class="tweet-profile-avatar"></div>
+    </div>
+    <div class="tweet-user-info">
+      <RouterLink :to="{ name: 'profile', params: { username } }">
+        <div class="username">
+          {{ username }}
+        </div>
+      </RouterLink>
+    </div>
     <div class="tweet-content">
       {{ content }}
     </div>
@@ -101,6 +106,14 @@ const likeIcon = computed(() => {
 
 <style lang="scss" scoped>
 .tweet {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "profile userinfo"
+    "profile content"
+    "footer footer";
+
   padding: 1rem;
   padding-bottom: 5px;
   border-bottom: 1px solid var(--border-color);
@@ -113,7 +126,28 @@ const likeIcon = computed(() => {
     font-weight: bold;
   }
 
+  .tweet-profile {
+    grid-area: profile;
+    padding-right: 1rem;
+
+    .tweet-profile-avatar {
+      width: 50px;
+      height: 50px;
+      background-color: aqua;
+      border-radius: 50%;
+    }
+  }
+
+  .tweet-user-info {
+    grid-area: userinfo;
+  }
+
+  .tweet-content {
+    grid-area: content;
+  }
+
   .tweet-footer {
+    grid-area: footer;
     display: flex;
     justify-content: flex-end;
 

@@ -18,48 +18,63 @@ async function logout() {
 </script>
 
 <template>
-  <RouterLink :to="{ name: 'home' }">
-    <div>
-      <font-awesome-icon :icon="['fas', 'house']" size="lg" />
-      <span class="nav-link-text">Home</span>
-    </div>
-  </RouterLink>
-
-  <RouterLink :to="{ name: 'home' }">
-    <div>
-      <font-awesome-icon :icon="['fas', 'hashtag']" size="lg" />
-      <span class="nav-link-text">Explore</span>
-    </div>
-  </RouterLink>
-
-  <RouterLink :to="{ name: 'home' }">
-    <div>
-      <font-awesome-icon :icon="['fas', 'bell']" size="lg" />
-      <span class="nav-link-text">Notifications</span>
-    </div>
-  </RouterLink>
-
-  <RouterLink
-    :to="{ name: 'profile', params: { username: authStore.username } }"
-  >
-    <div>
-      <font-awesome-icon :icon="['fas', 'user']" size="lg" />
-      <span class="nav-link-text">Profile</span>
-    </div>
-  </RouterLink>
-
-  <a @click="logout">
-    <div>
-      <font-awesome-icon :icon="['fas', 'right-from-bracket']" size="lg" />
-      <span class="nav-link-text">Logout</span>
-    </div>
-  </a>
+  <div>
+    <RouterLink :to="{ name: 'home' }">
+      <div>
+        <font-awesome-icon
+          class="nav-link-icon"
+          :icon="['fas', 'house']"
+          size="lg"
+        />
+        <span class="nav-link-text">Home</span>
+      </div>
+    </RouterLink>
+    <RouterLink :to="{ name: 'home' }">
+      <div>
+        <font-awesome-icon
+          class="nav-link-icon"
+          :icon="['fas', 'hashtag']"
+          size="lg"
+        />
+        <span class="nav-link-text">Explore</span>
+      </div>
+    </RouterLink>
+    <RouterLink :to="{ name: 'home' }">
+      <div>
+        <font-awesome-icon
+          class="nav-link-icon"
+          :icon="['fas', 'bell']"
+          size="lg"
+        />
+        <span class="nav-link-text">Notifications</span>
+      </div>
+    </RouterLink>
+    <RouterLink
+      :to="{ name: 'profile', params: { username: authStore.username } }"
+    >
+      <div>
+        <font-awesome-icon :icon="['fas', 'user']" size="lg" />
+        <span class="nav-link-text">Profile</span>
+      </div>
+    </RouterLink>
+    <a @click="logout">
+      <div>
+        <font-awesome-icon
+          class="nav-link-icon"
+          :icon="['fas', 'right-from-bracket']"
+          size="lg"
+        />
+        <span class="nav-link-text">Logout</span>
+      </div>
+    </a>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 a {
   display: block;
   cursor: pointer;
+  margin: 0.5rem;
 
   &:hover {
     div {
@@ -68,15 +83,17 @@ a {
   }
 
   div {
+    max-width: 100%;
     font-size: 1.3rem;
     display: inline-block;
-    margin: 0.5rem;
     padding: 1rem 1.5rem;
-    cursor: pointer;
     border-radius: 9999px;
     transition: background-color 200ms linear;
 
-    span {
+    .nav-link-icon {
+      max-width: 25px;
+    }
+    .nav-link-text {
       margin-left: 1rem;
     }
   }
@@ -86,8 +103,6 @@ a {
   a {
     text-align: right;
     div {
-      margin: 0;
-      border-radius: 9999px;
       .nav-link-text {
         display: none;
       }

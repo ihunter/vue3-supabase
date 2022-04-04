@@ -35,7 +35,6 @@ const authStore = useAuthStore();
     height: 100vh;
     position: sticky;
     top: 0;
-    padding: 1rem;
   }
 
   main {
@@ -66,7 +65,7 @@ const authStore = useAuthStore();
 
 @media (max-width: 900px) {
   .container {
-    grid-template-columns: 100px auto;
+    grid-template-columns: 85px 2fr;
   }
 }
 </style>
