@@ -144,6 +144,10 @@ const likeIcon = computed(() => {
 
   .tweet-content {
     grid-area: content;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
   }
 
   .tweet-footer {
