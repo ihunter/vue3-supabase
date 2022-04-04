@@ -4,6 +4,7 @@ import { RouterLink } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 import { useTweetStore } from "../stores/tweets";
 import { supabase } from "@/supabase";
+import { formatDistanceToNowStrict, parseISO } from "date-fns";
 
 const tweetStore = useTweetStore();
 
@@ -27,6 +28,10 @@ const props = defineProps({
   likes: {
     type: Number,
     default: 0,
+  },
+  created: {
+    type: String,
+    default: "2022-04-04T02:50:37.202249+00:00",
   },
 });
 
@@ -78,6 +83,12 @@ async function unlikeTweet() {
 const likeIcon = computed(() => {
   return props.liked ? ["fas", "heart"] : ["far", "heart"];
 });
+
+const createdDate = computed(() => {
+  return formatDistanceToNowStrict(parseISO(props.created), {
+    addSuffix: true,
+  });
+});
 </script>
 
 <template>
@@ -85,11 +96,14 @@ const likeIcon = computed(() => {
     <div class="tweet-profile">
       <div class="tweet-profile-avatar"></div>
     </div>
-    <div class="tweet-user-info">
+    <div class="tweet-info">
       <RouterLink :to="{ name: 'profile', params: { username } }">
-        <div class="username">
+        <span class="username">
           {{ username }}
-        </div>
+        </span>
+        <span class="created">
+          {{ createdDate }}
+        </span>
       </RouterLink>
     </div>
     <div class="tweet-content">
@@ -110,9 +124,9 @@ const likeIcon = computed(() => {
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto auto;
   grid-template-areas:
-    "profile userinfo"
+    "profile info"
     "profile content"
-    "footer footer";
+    "profile footer";
 
   padding: 1rem;
   padding-bottom: 5px;
@@ -120,10 +134,6 @@ const likeIcon = computed(() => {
 
   a:hover {
     text-decoration: underline;
-  }
-
-  .username {
-    font-weight: bold;
   }
 
   .tweet-profile {
@@ -138,8 +148,17 @@ const likeIcon = computed(() => {
     }
   }
 
-  .tweet-user-info {
-    grid-area: userinfo;
+  .tweet-info {
+    grid-area: info;
+
+    .username {
+      font-weight: bold;
+    }
+
+    .created {
+      color: var(--vt-c-text-dark-2);
+      margin-left: 0.5rem;
+    }
   }
 
   .tweet-content {
