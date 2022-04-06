@@ -34,6 +34,8 @@ const authStore = useAuthStore();
   nav {
     height: 100vh;
     position: sticky;
+    display: flex;
+    flex-direction: column;
     top: 0;
   }
 
@@ -65,7 +67,22 @@ const authStore = useAuthStore();
 
 @media (max-width: 900px) {
   .container {
-    grid-template-columns: 85px 2fr;
+    grid-template-columns: 1fr;
+
+    nav {
+      grid-row: 2 / 2;
+      background: var(--color-background);
+      position: sticky;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      z-index: 1;
+      height: auto;
+      width: 100%;
+      top: auto;
+      bottom: 0;
+      left: 0;
+    }
   }
 }
 </style>

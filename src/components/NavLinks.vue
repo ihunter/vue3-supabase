@@ -18,61 +18,58 @@ async function logout() {
 </script>
 
 <template>
-  <div>
-    <RouterLink :to="{ name: 'home' }">
-      <div>
-        <font-awesome-icon
-          class="nav-link-icon"
-          :icon="['fas', 'house']"
-          size="lg"
-        />
-        <span class="nav-link-text">Home</span>
-      </div>
-    </RouterLink>
-    <RouterLink :to="{ name: 'home' }">
-      <div>
-        <font-awesome-icon
-          class="nav-link-icon"
-          :icon="['fas', 'hashtag']"
-          size="lg"
-        />
-        <span class="nav-link-text">Explore</span>
-      </div>
-    </RouterLink>
-    <RouterLink :to="{ name: 'home' }">
-      <div>
-        <font-awesome-icon
-          class="nav-link-icon"
-          :icon="['fas', 'bell']"
-          size="lg"
-        />
-        <span class="nav-link-text">Notifications</span>
-      </div>
-    </RouterLink>
-    <RouterLink
-      :to="{ name: 'profile', params: { username: authStore.username } }"
-    >
-      <div>
-        <font-awesome-icon :icon="['fas', 'user']" size="lg" />
-        <span class="nav-link-text">Profile</span>
-      </div>
-    </RouterLink>
-    <a @click="logout">
-      <div>
-        <font-awesome-icon
-          class="nav-link-icon"
-          :icon="['fas', 'right-from-bracket']"
-          size="lg"
-        />
-        <span class="nav-link-text">Logout</span>
-      </div>
-    </a>
-  </div>
+  <RouterLink :to="{ name: 'home' }">
+    <div>
+      <font-awesome-icon
+        class="nav-link-icon"
+        :icon="['fas', 'house']"
+        size="lg"
+      />
+      <span class="nav-link-text">Home</span>
+    </div>
+  </RouterLink>
+  <RouterLink :to="{ name: 'home' }">
+    <div>
+      <font-awesome-icon
+        class="nav-link-icon"
+        :icon="['fas', 'hashtag']"
+        size="lg"
+      />
+      <span class="nav-link-text">Explore</span>
+    </div>
+  </RouterLink>
+  <RouterLink :to="{ name: 'home' }">
+    <div>
+      <font-awesome-icon
+        class="nav-link-icon"
+        :icon="['fas', 'bell']"
+        size="lg"
+      />
+      <span class="nav-link-text">Notifications</span>
+    </div>
+  </RouterLink>
+  <RouterLink
+    :to="{ name: 'profile', params: { username: authStore.username } }"
+  >
+    <div>
+      <font-awesome-icon :icon="['fas', 'user']" size="lg" />
+      <span class="nav-link-text">Profile</span>
+    </div>
+  </RouterLink>
+  <a @click="logout">
+    <div>
+      <font-awesome-icon
+        class="nav-link-icon"
+        :icon="['fas', 'right-from-bracket']"
+        size="lg"
+      />
+      <span class="nav-link-text">Logout</span>
+    </div>
+  </a>
 </template>
 
 <style lang="scss" scoped>
 a {
-  display: block;
   cursor: pointer;
   margin: 0.5rem;
 
