@@ -68,13 +68,19 @@ const authStore = useAuthStore();
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
 
+    main {
+      margin-bottom: 65px;
+    }
+
     nav {
+      border-top: 1px solid var(--border-color);
       grid-row: 2 / 2;
       background: var(--color-background);
-      position: sticky;
+      position: fixed;
       z-index: 1;
       height: auto;
       width: 100%;
+      top: auto;
       bottom: 0;
       left: 0;
     }

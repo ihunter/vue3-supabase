@@ -125,7 +125,7 @@ async function logout() {
       text-align: right;
       div {
         font-size: 1rem;
-        padding: 1rem 0;
+        padding: 0.75rem 1rem;
       }
     }
   }
