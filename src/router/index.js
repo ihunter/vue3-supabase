@@ -21,6 +21,12 @@ const router = createRouter({
       name: "login",
       component: () => import("../views/LoginView.vue"),
       meta: { requiresAuth: false, layout: "DefaultLayout" },
+      beforeEnter: (to, from) => {
+        const authStore = useAuthStore();
+        if (authStore.isAuthenticated) {
+          return { name: "home" };
+        }
+      },
     },
     {
       path: "/register",
