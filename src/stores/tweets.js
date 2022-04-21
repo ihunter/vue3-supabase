@@ -20,9 +20,27 @@ export const useTweetStore = defineStore({
   actions: {
     async getTweets() {
       try {
+        const authStore = useAuthStore();
+        // const { data, error } = await supabase
+        //   .from("follows")
+        //   .select(
+        //     "*, profiles!following_id( user_id, tweets!user_id( *, profiles( * ) ) )"
+        //   )
+        //   .eq("follower_id", authStore.user.id);
+
+        const { data: following, error: followsError } = await supabase
+          .from("follows")
+          .select("following_id")
+          .eq("follower_id", authStore.user.id);
+
+        if (followsError) throw error;
+
+        const followingIds = following.map((id) => id.following_id);
+
         const { data, error } = await supabase
           .from("tweets")
           .select("*, profiles( * )")
+          .in("user_id", followingIds)
           .order("created_at", { ascending: false });
 
         if (error) throw error;
