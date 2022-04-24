@@ -1,13 +1,19 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
+import { useAuthStore } from "../stores/auth";
+import { useTweetStore } from "../stores/tweets";
 import { supabase } from "@/supabase";
 
 const props = defineProps(["username"]);
 
+const authStore = useAuthStore();
+const tweetStore = useTweetStore();
+
 const loading = ref(false);
 const profile = ref({});
 
+// Profile
 async function getProfile() {
   try {
     loading.value = true;
@@ -28,6 +34,10 @@ async function getProfile() {
   }
 }
 
+const isUsersProfile = computed(() => {
+  return authStore.user.id === profile.value.user_id;
+});
+
 onBeforeRouteUpdate(async (to, from) => {
   if (to.params.profile !== from.params.profile) {
     getProfile();
@@ -37,13 +47,63 @@ onBeforeRouteUpdate(async (to, from) => {
 onMounted(async () => {
   getProfile();
 });
+
+// Follow
+async function followUser() {
+  console.log("follow user");
+  try {
+    const { data, error } = await supabase.from("follows").insert([
+      {
+        follower_id: authStore.user.id,
+        following_id: profile.value.user_id,
+      },
+    ]);
+
+    if (error) throw error;
+
+    tweetStore.followingIds.push(profile.value.user_id);
+
+    console.log(data);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+async function unfollowUser() {
+  console.log("follow user");
+  try {
+    const { data, error } = await supabase.from("follows").delete().match({
+      follower_id: authStore.user.id,
+      following_id: profile.value.user_id,
+    });
+
+    if (error) throw error;
+
+    tweetStore.followingIds = tweetStore.followingIds.filter(
+      (id) => id !== profile.value.user_id
+    );
+
+    console.log(data);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+const isUserFollowing = computed(() => {
+  return tweetStore.followingIds.includes(profile.value.user_id);
+});
+
+onMounted(async () => {
+  tweetStore.getFollowing();
+});
 </script>
 
 <template>
   <div class="profile">
     <div class="profile-avatar"></div>
-    <div class="profile-actions">
-      <button>Follow</button>
+    <div class="profile-actions" v-if="!isUsersProfile">
+      <button v-if="isUserFollowing" @click="unfollowUser">Unfollow</button>
+      <button v-else @click="followUser">Follow</button>
     </div>
     <div class="profile-name">
       {{ profile.username }}

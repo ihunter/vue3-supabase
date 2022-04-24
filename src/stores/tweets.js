@@ -7,6 +7,7 @@ export const useTweetStore = defineStore({
   state: () => ({
     tweets: [],
     userLikedTweets: [],
+    followingIds: [],
   }),
   getters: {
     allTweets: (state) => {
@@ -18,29 +19,30 @@ export const useTweetStore = defineStore({
     },
   },
   actions: {
-    async getTweets() {
+    async getFollowing() {
       try {
         const authStore = useAuthStore();
-        // const { data, error } = await supabase
-        //   .from("follows")
-        //   .select(
-        //     "*, profiles!following_id( user_id, tweets!user_id( *, profiles( * ) ) )"
-        //   )
-        //   .eq("follower_id", authStore.user.id);
 
         const { data: following, error: followsError } = await supabase
           .from("follows")
           .select("following_id")
           .eq("follower_id", authStore.user.id);
 
-        if (followsError) throw error;
+        if (followsError) throw followsError;
 
-        const followingIds = following.map((id) => id.following_id);
+        this.followingIds = following.map((id) => id.following_id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getTweets() {
+      try {
+        await this.getFollowing();
 
         const { data, error } = await supabase
           .from("tweets")
           .select("*, profiles( * )")
-          .in("user_id", followingIds)
+          .in("user_id", this.followingIds)
           .order("created_at", { ascending: false });
 
         if (error) throw error;

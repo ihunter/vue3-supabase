@@ -32,7 +32,6 @@ defineProps({
     :liked="tweet.liked"
     :created="tweet.created_at"
   />
-  <!-- <TweetItem v-for="i in 20" :key="i" :id="i" /> -->
 </template>
 
 <style lang="scss" scoped></style>
