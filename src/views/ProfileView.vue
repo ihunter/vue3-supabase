@@ -5,18 +5,21 @@ import { useAuthStore } from "../stores/auth";
 import { useTweetStore } from "../stores/tweets";
 import { supabase } from "@/supabase";
 
+import TweetList from "@/components/TweetList.vue";
+
 const props = defineProps(["username"]);
 
 const authStore = useAuthStore();
 const tweetStore = useTweetStore();
 
-const loading = ref(false);
+const loadingProfile = ref(false);
+const loadingTweets = ref(false);
 const profile = ref({});
 
 // Profile
 async function getProfile() {
   try {
-    loading.value = true;
+    loadingProfile.value = true;
 
     const { data, error, status } = await supabase
       .from("profiles")
@@ -30,7 +33,7 @@ async function getProfile() {
   } catch (error) {
     console.error(error.message);
   } finally {
-    loading.value = false;
+    loadingProfile.value = false;
   }
 }
 
@@ -42,12 +45,26 @@ const isUsersProfile = computed(() => {
 
 onBeforeRouteUpdate(async (to, from) => {
   if (to.params.profile !== from.params.profile) {
-    getProfile();
+    await getProfile();
+
+    loadingTweets.value = true;
+    await Promise.allSettled([
+      tweetStore.getProfileTweets(profile.value.user_id),
+      tweetStore.getUserLikedTweets(),
+    ]);
+    loadingTweets.value = false;
   }
 });
 
 onMounted(async () => {
-  getProfile();
+  await getProfile();
+
+  loadingTweets.value = true;
+  await Promise.allSettled([
+    tweetStore.getProfileTweets(profile.value.user_id),
+    tweetStore.getUserLikedTweets(),
+  ]);
+  loadingTweets.value = false;
 });
 
 // Follow
@@ -121,12 +138,14 @@ onMounted(async () => {
       voluptatum nostrum?
     </div>
   </div>
+  <TweetList :tweets="tweetStore.allTweets" :loading="loadingTweets" />
 </template>
 
 <style lang="scss" scoped>
 .profile {
   padding: 1rem;
   display: grid;
+  border-bottom: 1px solid var(--border-color);
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto auto;
   grid-template-areas:

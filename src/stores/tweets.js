@@ -54,9 +54,26 @@ export const useTweetStore = defineStore({
         console.error(error);
       }
     },
+    async getProfileTweets(profileId) {
+      try {
+        const { data, error } = await supabase
+          .from("tweets")
+          .select("*, profiles( * )")
+          .eq("user_id", profileId)
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        this.tweets = data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async getUserLikedTweets() {
       try {
         const authStore = useAuthStore();
+
+        if (!authStore.isAuthenticated) return;
 
         const { data, error } = await supabase
           .from("liked_tweets")
