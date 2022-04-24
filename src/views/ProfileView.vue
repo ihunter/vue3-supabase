@@ -52,18 +52,19 @@ onMounted(async () => {
 async function followUser() {
   console.log("follow user");
   try {
-    const { data, error } = await supabase.from("follows").insert([
-      {
-        follower_id: authStore.user.id,
-        following_id: profile.value.user_id,
-      },
-    ]);
+    const { error } = await supabase.from("follows").insert(
+      [
+        {
+          follower_id: authStore.user.id,
+          following_id: profile.value.user_id,
+        },
+      ],
+      { returning: "minimal" }
+    );
 
     if (error) throw error;
 
     tweetStore.followingIds.push(profile.value.user_id);
-
-    console.log(data);
   } catch (error) {
     console.error(error.message);
   }
@@ -72,18 +73,19 @@ async function followUser() {
 async function unfollowUser() {
   console.log("follow user");
   try {
-    const { data, error } = await supabase.from("follows").delete().match({
-      follower_id: authStore.user.id,
-      following_id: profile.value.user_id,
-    });
+    const { error } = await supabase
+      .from("follows")
+      .delete({ returning: "minimal" })
+      .match({
+        follower_id: authStore.user.id,
+        following_id: profile.value.user_id,
+      });
 
     if (error) throw error;
 
     tweetStore.followingIds = tweetStore.followingIds.filter(
       (id) => id !== profile.value.user_id
     );
-
-    console.log(data);
   } catch (error) {
     console.error(error.message);
   }
