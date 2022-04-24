@@ -35,6 +35,8 @@ async function getProfile() {
 }
 
 const isUsersProfile = computed(() => {
+  if (!authStore.isAuthenticated) return false;
+
   return authStore.user.id === profile.value.user_id;
 });
 
@@ -50,7 +52,8 @@ onMounted(async () => {
 
 // Follow
 async function followUser() {
-  console.log("follow user");
+  if (!authStore.isAuthenticated) return;
+
   try {
     const { error } = await supabase.from("follows").insert(
       [
@@ -71,7 +74,8 @@ async function followUser() {
 }
 
 async function unfollowUser() {
-  console.log("follow user");
+  if (!authStore.isAuthenticated) return;
+
   try {
     const { error } = await supabase
       .from("follows")

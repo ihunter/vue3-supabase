@@ -9,8 +9,8 @@ const router = useRouter();
 
 async function logout() {
   try {
-    await router.push({ name: "login" });
     await supabase.auth.signOut();
+    await router.push({ name: "login" });
   } catch (error) {
     console.error(error.message);
   }

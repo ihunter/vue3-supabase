@@ -23,6 +23,8 @@ export const useTweetStore = defineStore({
       try {
         const authStore = useAuthStore();
 
+        if (!authStore.isAuthenticated) return;
+
         const { data: following, error: followsError } = await supabase
           .from("follows")
           .select("following_id")
@@ -55,6 +57,7 @@ export const useTweetStore = defineStore({
     async getUserLikedTweets() {
       try {
         const authStore = useAuthStore();
+
         const { data, error } = await supabase
           .from("liked_tweets")
           .select("tweet_id")
