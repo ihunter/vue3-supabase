@@ -17,11 +17,17 @@ const router = createRouter({
       meta: { requiresAuth: true, layout: "HomeLayout" },
     },
     {
+      path: "/explore",
+      name: "explore",
+      component: () => import("../views/ExploreView.vue"),
+      meta: { requiresAuth: true, layout: "HomeLayout" },
+    },
+    {
       path: "/login",
       name: "login",
       component: () => import("../views/LoginView.vue"),
       meta: { requiresAuth: false, layout: "DefaultLayout" },
-      beforeEnter: (to, from) => {
+      beforeEnter: () => {
         const authStore = useAuthStore();
         if (authStore.isAuthenticated) {
           return { name: "home" };

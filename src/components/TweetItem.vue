@@ -94,7 +94,9 @@ const createdDate = computed(() => {
 <template>
   <div class="tweet">
     <div class="tweet-profile">
-      <div class="tweet-profile-avatar"></div>
+      <RouterLink :to="{ name: 'profile', params: { username } }">
+        <div class="tweet-profile-avatar"></div>
+      </RouterLink>
     </div>
     <div class="tweet-info">
       <RouterLink :to="{ name: 'profile', params: { username } }">

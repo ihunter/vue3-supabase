@@ -1,73 +1,22 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import { onBeforeRouteUpdate } from "vue-router";
+import { computed } from "vue";
+import { supabase } from "@/supabase";
 import { useAuthStore } from "../stores/auth";
 import { useTweetStore } from "../stores/tweets";
-import { supabase } from "@/supabase";
 
-import TweetList from "@/components/TweetList.vue";
-
-const props = defineProps(["username"]);
+const props = defineProps({
+  profile: Object,
+});
 
 const authStore = useAuthStore();
 const tweetStore = useTweetStore();
 
-const loadingProfile = ref(false);
-const loadingTweets = ref(false);
-const profile = ref({});
-
-// Profile
-async function getProfile() {
-  try {
-    loadingProfile.value = true;
-
-    const { data, error, status } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("username", props.username)
-      .single();
-
-    if (error && status !== 406) throw error;
-
-    profile.value = data;
-  } catch (error) {
-    console.error(error.message);
-  } finally {
-    loadingProfile.value = false;
-  }
-}
-
 const isUsersProfile = computed(() => {
   if (!authStore.isAuthenticated) return false;
 
-  return authStore.user.id === profile.value.user_id;
+  return authStore.user.id === props.profile.user_id;
 });
 
-onBeforeRouteUpdate(async (to, from) => {
-  if (to.params.profile !== from.params.profile) {
-    await getProfile();
-
-    loadingTweets.value = true;
-    await Promise.allSettled([
-      tweetStore.getProfileTweets(profile.value.user_id),
-      tweetStore.getUserLikedTweets(),
-    ]);
-    loadingTweets.value = false;
-  }
-});
-
-onMounted(async () => {
-  await getProfile();
-
-  loadingTweets.value = true;
-  await Promise.allSettled([
-    tweetStore.getProfileTweets(profile.value.user_id),
-    tweetStore.getUserLikedTweets(),
-  ]);
-  loadingTweets.value = false;
-});
-
-// Follow
 async function followUser() {
   if (!authStore.isAuthenticated) return;
 
@@ -76,7 +25,7 @@ async function followUser() {
       [
         {
           follower_id: authStore.user.id,
-          following_id: profile.value.user_id,
+          following_id: props.profile.user_id,
         },
       ],
       { returning: "minimal" }
@@ -84,7 +33,7 @@ async function followUser() {
 
     if (error) throw error;
 
-    tweetStore.followingIds.push(profile.value.user_id);
+    tweetStore.followingIds.push(props.profile.user_id);
   } catch (error) {
     console.error(error.message);
   }
@@ -99,13 +48,13 @@ async function unfollowUser() {
       .delete({ returning: "minimal" })
       .match({
         follower_id: authStore.user.id,
-        following_id: profile.value.user_id,
+        following_id: props.profile.user_id,
       });
 
     if (error) throw error;
 
     tweetStore.followingIds = tweetStore.followingIds.filter(
-      (id) => id !== profile.value.user_id
+      (id) => id !== props.profile.user_id
     );
   } catch (error) {
     console.error(error.message);
@@ -113,11 +62,7 @@ async function unfollowUser() {
 }
 
 const isUserFollowing = computed(() => {
-  return tweetStore.followingIds.includes(profile.value.user_id);
-});
-
-onMounted(async () => {
-  tweetStore.getFollowing();
+  return tweetStore.followingIds.includes(props.profile.user_id);
 });
 </script>
 
@@ -136,7 +81,6 @@ onMounted(async () => {
       <p v-else>Bio... if there was one. :(</p>
     </div>
   </div>
-  <TweetList :tweets="tweetStore.allTweets" :loading="loadingTweets" />
 </template>
 
 <style lang="scss" scoped>

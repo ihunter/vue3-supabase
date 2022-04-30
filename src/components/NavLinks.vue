@@ -29,7 +29,7 @@ async function logout() {
         <span class="nav-link-text">Home</span>
       </div>
     </RouterLink>
-    <RouterLink :to="{ name: 'home' }">
+    <RouterLink :to="{ name: 'explore' }">
       <div>
         <font-awesome-icon
           class="nav-link-icon"
@@ -88,7 +88,7 @@ async function logout() {
       display: inline-block;
       max-width: 100%;
       font-size: 1.3rem;
-      padding: 1rem 1.5rem;
+      padding: 0.75rem;
       border-radius: 9999px;
       transition: background-color 200ms linear;
 
@@ -96,7 +96,7 @@ async function logout() {
         max-width: 25px;
       }
       .nav-link-text {
-        margin-left: 1rem;
+        margin: 0 1rem;
       }
     }
   }
