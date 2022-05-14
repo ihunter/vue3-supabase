@@ -6,6 +6,7 @@ export const useTweetStore = defineStore({
   id: "tweets",
   state: () => ({
     tweets: [],
+    profileTweets: [],
     userLikedTweets: [],
     followingIds: [],
   }),
@@ -54,17 +55,17 @@ export const useTweetStore = defineStore({
         console.error(error);
       }
     },
-    async getProfileTweets(profileId) {
+    async getProfileTweets(username) {
       try {
         const { data, error } = await supabase
           .from("tweets")
-          .select("*, profiles( * )")
-          .eq("user_id", profileId)
+          .select("*, profiles!inner(*)")
+          .eq("profiles.username", username)
           .order("created_at", { ascending: false });
 
         if (error) throw error;
 
-        this.tweets = data;
+        this.profileTweets = data;
       } catch (error) {
         console.error(error);
       }
